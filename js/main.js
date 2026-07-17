@@ -115,9 +115,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // SCROLL REVEAL ANIMATIONS (IntersectionObserver + stagger)
     // ============================================
     const revealElements = document.querySelectorAll('.scroll-reveal');
+    let revealObserver = null;
 
-    if (revealElements.length > 0 && 'IntersectionObserver' in window) {
-        const revealObserver = new IntersectionObserver((entries) => {
+    if ('IntersectionObserver' in window) {
+        revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const el = entry.target;
@@ -129,10 +130,87 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    }
 
+    if (revealObserver) {
         revealElements.forEach(el => revealObserver.observe(el));
     } else {
         revealElements.forEach(el => el.classList.add('active'));
+    }
+
+    // ============================================
+    // EQUIPO: se carga desde data/equipo.json
+    // (editar con equipo-editor.html, sin tocar código)
+    // ============================================
+    const teamGrid = document.getElementById('teamGrid');
+
+    function ocultarEquipo() {
+        const teamSection = document.getElementById('equipo');
+        if (teamSection) teamSection.hidden = true;
+        // Ocultar también el link del menú para no apuntar a una sección invisible
+        const navEquipo = document.querySelector('.nav-list a[href="#equipo"]');
+        if (navEquipo && navEquipo.parentElement) navEquipo.parentElement.hidden = true;
+    }
+
+    if (teamGrid) {
+        fetch('data/equipo.json')
+            .then(res => res.json())
+            .then(data => {
+                const equipo = (data && data.equipo) || [];
+
+                if (equipo.length === 0) {
+                    ocultarEquipo();
+                    return;
+                }
+
+                equipo.forEach(persona => {
+                    const card = document.createElement('div');
+                    card.className = 'team-card scroll-reveal';
+
+                    const avatar = document.createElement('div');
+                    avatar.className = 'team-avatar';
+                    if (persona.foto) {
+                        const img = document.createElement('img');
+                        img.src = 'images/equipo/' + persona.foto;
+                        img.alt = persona.nombre;
+                        img.loading = 'lazy';
+                        avatar.appendChild(img);
+                    } else {
+                        // Iniciales a partir del nombre, ignorando "Dr."/"Dra."
+                        const palabras = (persona.nombre || '')
+                            .split(/\s+/)
+                            .filter(p => p && !/^dra?\.?$/i.test(p));
+                        avatar.textContent = palabras.slice(0, 2).map(p => p[0].toUpperCase()).join('');
+                    }
+                    card.appendChild(avatar);
+
+                    const nombre = document.createElement('h3');
+                    nombre.textContent = persona.nombre;
+                    card.appendChild(nombre);
+
+                    if (persona.especialidad) {
+                        const esp = document.createElement('p');
+                        esp.className = 'team-specialty';
+                        esp.textContent = persona.especialidad;
+                        card.appendChild(esp);
+                    }
+
+                    if (persona.dias) {
+                        const dias = document.createElement('p');
+                        dias.className = 'team-days';
+                        dias.textContent = persona.dias;
+                        card.appendChild(dias);
+                    }
+
+                    teamGrid.appendChild(card);
+                    if (revealObserver) {
+                        revealObserver.observe(card);
+                    } else {
+                        card.classList.add('active');
+                    }
+                });
+            })
+            .catch(ocultarEquipo);
     }
     
     // ============================================
