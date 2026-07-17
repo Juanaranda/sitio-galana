@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Toggle menú móvil
     if (navToggle) {
+        navToggle.setAttribute('aria-expanded', 'false');
         navToggle.addEventListener('click', function() {
             navToggle.classList.toggle('active');
             navList.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', navList.classList.contains('active'));
         });
         
         // Cerrar menú al hacer click en un enlace
@@ -109,8 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    window.addEventListener('scroll', setActiveLink);
-    
     // ============================================
     // SCROLL REVEAL ANIMATIONS
     // ============================================
@@ -130,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (revealElements.length > 0) {
-        window.addEventListener('scroll', revealOnScroll);
         revealOnScroll(); // Ejecutar al cargar
     }
     
@@ -145,25 +144,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ============================================
-    // LAZY LOADING DE IMÁGENES
+    // ESTADO ABIERTO/CERRADO SEGÚN HORARIO (hora de Santiago)
     // ============================================
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                    observer.unobserve(img);
-                }
-            });
-        });
-        
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
+    const openStatus = document.getElementById('openStatus');
+
+    if (openStatus) {
+        // Horario: Lun-Vie 10:00-18:00, Sáb 10:00-14:00, Dom cerrado
+        const schedule = { 1: [10, 18], 2: [10, 18], 3: [10, 18], 4: [10, 18], 5: [10, 18], 6: [10, 14] };
+
+        try {
+            const parts = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/Santiago',
+                hour12: false,
+                weekday: 'short',
+                hour: 'numeric',
+                minute: 'numeric'
+            }).formatToParts(new Date());
+
+            const get = type => parts.find(p => p.type === type).value;
+            const dayIndex = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+            const hour = (parseInt(get('hour'), 10) % 24) + parseInt(get('minute'), 10) / 60;
+
+            const range = schedule[dayIndex];
+            const isOpen = !!range && hour >= range[0] && hour < range[1];
+
+            openStatus.textContent = isOpen ? 'Abierto ahora' : 'Cerrado ahora';
+            openStatus.classList.add(isOpen ? 'open' : 'closed');
+            openStatus.hidden = false;
+        } catch (e) {
+            // Si el navegador no soporta timeZone, no se muestra el estado
+        }
     }
-    
+
     // ============================================
     // FORMULARIO DE CONTACTO (si existe)
     // ============================================
@@ -205,8 +217,9 @@ document.addEventListener('DOMContentLoaded', function() {
     style.textContent = `
         .scroll-top-btn {
             position: fixed;
+            /* A la izquierda para no tapar el widget de chat (abajo a la derecha) */
             bottom: 30px;
-            right: 30px;
+            left: 30px;
             width: 50px;
             height: 50px;
             background: var(--accent-color);
@@ -236,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
         @media (max-width: 640px) {
             .scroll-top-btn {
                 bottom: 20px;
-                right: 20px;
+                left: 20px;
                 width: 45px;
                 height: 45px;
                 font-size: 1.25rem;
