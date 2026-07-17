@@ -112,25 +112,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ============================================
-    // SCROLL REVEAL ANIMATIONS
+    // SCROLL REVEAL ANIMATIONS (IntersectionObserver + stagger)
     // ============================================
     const revealElements = document.querySelectorAll('.scroll-reveal');
-    
-    function revealOnScroll() {
-        const windowHeight = window.innerHeight;
-        const revealPoint = 100;
-        
-        revealElements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            
-            if (elementTop < windowHeight - revealPoint) {
-                element.classList.add('active');
-            }
-        });
-    }
-    
-    if (revealElements.length > 0) {
-        revealOnScroll(); // Ejecutar al cargar
+
+    if (revealElements.length > 0 && 'IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    // Stagger: retraso según posición entre los hermanos que se revelan juntos
+                    const siblings = Array.from(el.parentElement.querySelectorAll(':scope > .scroll-reveal'));
+                    el.style.transitionDelay = (siblings.indexOf(el) * 0.1) + 's';
+                    el.classList.add('active');
+                    revealObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    } else {
+        revealElements.forEach(el => el.classList.add('active'));
     }
     
     // ============================================
@@ -171,6 +173,13 @@ document.addEventListener('DOMContentLoaded', function() {
             openStatus.textContent = isOpen ? 'Abierto ahora' : 'Cerrado ahora';
             openStatus.classList.add(isOpen ? 'open' : 'closed');
             openStatus.hidden = false;
+
+            // Punto de estado en la tarjeta del hero
+            const heroDot = document.getElementById('heroStatusDot');
+            if (heroDot) {
+                heroDot.classList.add(isOpen ? 'open' : 'closed');
+                heroDot.title = isOpen ? 'Abierto ahora' : 'Cerrado ahora';
+            }
         } catch (e) {
             // Si el navegador no soporta timeZone, no se muestra el estado
         }
@@ -310,7 +319,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Aplicar debounce a funciones de scroll
     window.addEventListener('scroll', debounce(function() {
         setActiveLink();
-        revealOnScroll();
     }, 15));
     
     // ============================================
