@@ -4,11 +4,13 @@
 
 /* Variables CSS */
 :root {
-    /* Colores Principales — paleta derivada del logo Galana (#00A0C0) */
-    --primary-color: #007A94;
-    --primary-dark: #043E4D;
+    /* Colores Principales — paleta derivada del logo Galana (#00A0C0).
+       --primary-color es el teal más claro que aún cumple contraste AA
+       con texto blanco; los elementos grandes usan el color exacto del logo. */
+    --primary-color: #00809B;
+    --primary-dark: #05485A;
     --primary-light: #00A0C0;
-    --secondary-color: #4FCFE6;
+    --secondary-color: #52D4EC;
     --accent-color: #00A0C0;
     --accent-hover: #008CA8;
     --tint: #EAF8FB;
@@ -247,7 +249,7 @@ img {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(140deg, var(--primary-dark) 0%, var(--primary-color) 55%, var(--primary-light) 120%);
+    background: linear-gradient(140deg, var(--primary-dark) 0%, #0090AE 60%, var(--secondary-color) 130%);
     z-index: 1;
 }
 
@@ -570,7 +572,8 @@ img {
 
 .section-title {
     text-align: center;
-    color: var(--primary-color);
+    /* Color exacto del logo — legal en AA por ser texto grande */
+    color: var(--primary-light);
     margin-bottom: var(--spacing-sm);
 }
 
