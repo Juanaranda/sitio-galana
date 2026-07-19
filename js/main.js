@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Toggle menú móvil
     if (navToggle) {
+        navToggle.setAttribute('aria-expanded', 'false');
         navToggle.addEventListener('click', function() {
             navToggle.classList.toggle('active');
             navList.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', navList.classList.contains('active'));
         });
         
         // Cerrar menú al hacer click en un enlace
@@ -109,29 +111,106 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    window.addEventListener('scroll', setActiveLink);
-    
     // ============================================
-    // SCROLL REVEAL ANIMATIONS
+    // SCROLL REVEAL ANIMATIONS (IntersectionObserver + stagger)
     // ============================================
     const revealElements = document.querySelectorAll('.scroll-reveal');
-    
-    function revealOnScroll() {
-        const windowHeight = window.innerHeight;
-        const revealPoint = 100;
-        
-        revealElements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            
-            if (elementTop < windowHeight - revealPoint) {
-                element.classList.add('active');
-            }
-        });
+    let revealObserver = null;
+
+    if ('IntersectionObserver' in window) {
+        revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    // Stagger: retraso según posición entre los hermanos que se revelan juntos
+                    const siblings = Array.from(el.parentElement.querySelectorAll(':scope > .scroll-reveal'));
+                    el.style.transitionDelay = (siblings.indexOf(el) * 0.1) + 's';
+                    el.classList.add('active');
+                    revealObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
     }
-    
-    if (revealElements.length > 0) {
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll(); // Ejecutar al cargar
+
+    if (revealObserver) {
+        revealElements.forEach(el => revealObserver.observe(el));
+    } else {
+        revealElements.forEach(el => el.classList.add('active'));
+    }
+
+    // ============================================
+    // EQUIPO: se carga desde data/equipo.json
+    // (editar con equipo-editor.html, sin tocar código)
+    // ============================================
+    const teamGrid = document.getElementById('teamGrid');
+
+    function ocultarEquipo() {
+        const teamSection = document.getElementById('equipo');
+        if (teamSection) teamSection.hidden = true;
+        // Ocultar también el link del menú para no apuntar a una sección invisible
+        const navEquipo = document.querySelector('.nav-list a[href="#equipo"]');
+        if (navEquipo && navEquipo.parentElement) navEquipo.parentElement.hidden = true;
+    }
+
+    if (teamGrid) {
+        fetch('data/equipo.json')
+            .then(res => res.json())
+            .then(data => {
+                const equipo = (data && data.equipo) || [];
+
+                if (equipo.length === 0) {
+                    ocultarEquipo();
+                    return;
+                }
+
+                equipo.forEach(persona => {
+                    const card = document.createElement('div');
+                    card.className = 'team-card scroll-reveal';
+
+                    const avatar = document.createElement('div');
+                    avatar.className = 'team-avatar';
+                    if (persona.foto) {
+                        const img = document.createElement('img');
+                        img.src = 'images/equipo/' + persona.foto;
+                        img.alt = persona.nombre;
+                        img.loading = 'lazy';
+                        avatar.appendChild(img);
+                    } else {
+                        // Iniciales a partir del nombre, ignorando "Dr."/"Dra."
+                        const palabras = (persona.nombre || '')
+                            .split(/\s+/)
+                            .filter(p => p && !/^dra?\.?$/i.test(p));
+                        avatar.textContent = palabras.slice(0, 2).map(p => p[0].toUpperCase()).join('');
+                    }
+                    card.appendChild(avatar);
+
+                    const nombre = document.createElement('h3');
+                    nombre.textContent = persona.nombre;
+                    card.appendChild(nombre);
+
+                    if (persona.especialidad) {
+                        const esp = document.createElement('p');
+                        esp.className = 'team-specialty';
+                        esp.textContent = persona.especialidad;
+                        card.appendChild(esp);
+                    }
+
+                    if (persona.dias) {
+                        const dias = document.createElement('p');
+                        dias.className = 'team-days';
+                        dias.textContent = persona.dias;
+                        card.appendChild(dias);
+                    }
+
+                    teamGrid.appendChild(card);
+                    if (revealObserver) {
+                        revealObserver.observe(card);
+                    } else {
+                        card.classList.add('active');
+                    }
+                });
+            })
+            .catch(ocultarEquipo);
     }
     
     // ============================================
@@ -145,25 +224,45 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ============================================
-    // LAZY LOADING DE IMÁGENES
+    // ESTADO ABIERTO/CERRADO SEGÚN HORARIO (hora de Santiago)
     // ============================================
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                    observer.unobserve(img);
-                }
-            });
-        });
-        
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
+    const openStatus = document.getElementById('openStatus');
+
+    if (openStatus) {
+        // Horario: Lun-Vie 10:00-18:00, Sáb 10:00-14:00, Dom cerrado
+        const schedule = { 1: [10, 18], 2: [10, 18], 3: [10, 18], 4: [10, 18], 5: [10, 18], 6: [10, 14] };
+
+        try {
+            const parts = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/Santiago',
+                hour12: false,
+                weekday: 'short',
+                hour: 'numeric',
+                minute: 'numeric'
+            }).formatToParts(new Date());
+
+            const get = type => parts.find(p => p.type === type).value;
+            const dayIndex = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+            const hour = (parseInt(get('hour'), 10) % 24) + parseInt(get('minute'), 10) / 60;
+
+            const range = schedule[dayIndex];
+            const isOpen = !!range && hour >= range[0] && hour < range[1];
+
+            openStatus.textContent = isOpen ? 'Abierto ahora' : 'Cerrado ahora';
+            openStatus.classList.add(isOpen ? 'open' : 'closed');
+            openStatus.hidden = false;
+
+            // Punto de estado en la tarjeta del hero
+            const heroDot = document.getElementById('heroStatusDot');
+            if (heroDot) {
+                heroDot.classList.add(isOpen ? 'open' : 'closed');
+                heroDot.title = isOpen ? 'Abierto ahora' : 'Cerrado ahora';
+            }
+        } catch (e) {
+            // Si el navegador no soporta timeZone, no se muestra el estado
+        }
     }
-    
+
     // ============================================
     // FORMULARIO DE CONTACTO (si existe)
     // ============================================
@@ -205,8 +304,9 @@ document.addEventListener('DOMContentLoaded', function() {
     style.textContent = `
         .scroll-top-btn {
             position: fixed;
+            /* A la izquierda para no tapar el widget de chat (abajo a la derecha) */
             bottom: 30px;
-            right: 30px;
+            left: 30px;
             width: 50px;
             height: 50px;
             background: var(--accent-color);
@@ -236,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
         @media (max-width: 640px) {
             .scroll-top-btn {
                 bottom: 20px;
-                right: 20px;
+                left: 20px;
                 width: 45px;
                 height: 45px;
                 font-size: 1.25rem;
@@ -297,7 +397,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Aplicar debounce a funciones de scroll
     window.addEventListener('scroll', debounce(function() {
         setActiveLink();
-        revealOnScroll();
     }, 15));
     
     // ============================================

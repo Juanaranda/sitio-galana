@@ -1,0 +1,4 @@
+{
+  "_instrucciones": "Lista del equipo de la clínica. Para editarla sin tocar código, abre equipo-editor.html en el navegador, agrega a los profesionales y descarga el archivo actualizado. Mientras la lista esté vacía, la sección Equipo no se muestra en el sitio. Las fotos deben guardarse en images/equipo/ (descárgalas de Instagram y súbelas al repositorio; no uses links directos de Instagram porque caducan). Ejemplo de entrada: {\"nombre\": \"Dra. Ana Pérez\", \"especialidad\": \"Ortodoncia\", \"dias\": \"Lun · Mié · Vie\", \"foto\": \"ana.jpg\"}",
+  "equipo": []
+}

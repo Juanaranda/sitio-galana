@@ -5,8 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Dental GALANA | Dentista en Santiago, Chile</title>
     <meta name="description" content="La clínica dental GALANA ofrece diversos servicios de tratamiento de odontología a nuestros pacientes, incluyendo examen general, endodoncia, ortodoncia, rehabilitación, etc. Visítenos.">
+    <link rel="canonical" href="https://galana.cl/">
+    <meta name="theme-color" content="#00A0C0">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+
+    <!-- Open Graph / redes sociales -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Clínica Dental GALANA | Dentista en Santiago, Chile">
+    <meta property="og:description" content="Atención dental profesional en el corazón de Santiago: examen general, endodoncia, ortodoncia, implantes y cirugía. Reserva por WhatsApp.">
+    <meta property="og:url" content="https://galana.cl/">
+    <meta property="og:locale" content="es_CL">
+
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Datos estructurados para SEO local (Google Maps / búsquedas "dentista santiago") -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dentist",
+      "name": "Clínica Dental Galana",
+      "url": "https://galana.cl/",
+      "telephone": "+56956789735",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Paseo Huérfanos 1117, Oficina 607",
+        "addressLocality": "Santiago",
+        "addressRegion": "Región Metropolitana",
+        "addressCountry": "CL"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -33.439393,
+        "longitude": -70.652657
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "10:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "10:00",
+          "closes": "14:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/galanaclinicadental",
+        "https://www.facebook.com/profile.php?id=61557502093014"
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -26,7 +80,9 @@
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link active">Inicio</a></li>
                     <li><a href="servicios.html" class="nav-link">Servicios</a></li>
+                    <li><a href="#equipo" class="nav-link">Equipo</a></li>
                     <li><a href="#contact" class="nav-link">Contacto</a></li>
+                    <li><a href="https://wa.me/56956789735?text=Hola, me gustaría agendar una hora" class="btn btn-nav">Agendar</a></li>
                 </ul>
             </nav>
         </div>
@@ -37,88 +93,158 @@
         <div class="hero-bg"></div>
         <div class="hero-content">
             <div class="hero-text">
+                <p class="hero-eyebrow">Clínica Dental Galana · Santiago Centro</p>
                 <h1 class="hero-title">
-                    <span class="hero-subtitle">Clínica Dental</span>
-                    <span class="hero-main">GALANA</span>
+                    Tu sonrisa, <span class="hero-highlight">en buenas manos</span>
                 </h1>
-                <p class="hero-description">Tu sonrisa es nuestra prioridad.</p><p>Atención dental profesional en el corazón de Santiago.</p>
-                <a href="https://wa.me/56956789735" class="btn btn-primary">Reservar Cita</a>
+                <p class="hero-description">
+                    Atención dental cercana y profesional en el corazón de Santiago,
+                    con especialistas en cada área y horarios de lunes a sábado.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://wa.me/56956789735?text=Hola, me gustaría agendar una hora" class="btn btn-hero-primary">Reservar cita</a>
+                    <a href="servicios.html" class="btn btn-hero-secondary">Ver servicios</a>
+                </div>
+                <ul class="hero-facts">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        5 especialidades
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Lunes a sábado
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        A pasos del Metro Plaza de Armas
+                    </li>
+                </ul>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-photo">
+                    <img src="images/limpieza.avif" alt="Sonrisa saludable, antes y después de un tratamiento dental" width="900" height="900" fetchpriority="high">
+                </div>
+                <div class="hero-card hero-card-status">
+                    <span class="hero-card-dot" id="heroStatusDot"></span>
+                    <span id="heroStatus">Lun-Vie 10:00-18:00 · Sáb 10:00-14:00</span>
+                </div>
+                <div class="hero-card hero-card-location">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z" stroke-width="2"/><circle cx="12" cy="10" r="2.5" stroke-width="2"/></svg>
+                    Paseo Huérfanos 1117, Of. 607
+                </div>
             </div>
         </div>
-        <div class="hero-overlay"></div>
+    </section>
+
+    <!-- Barra de datos -->
+    <section class="stats-bar">
+        <div class="container">
+            <ul class="stats-list">
+                <li class="scroll-reveal"><strong>5</strong><span>especialidades dentales</span></li>
+                <li class="scroll-reveal"><strong>6</strong><span>días de atención a la semana</span></li>
+                <li class="scroll-reveal"><strong>100%</strong><span>atención personalizada</span></li>
+                <li class="scroll-reveal"><strong>Santiago</strong><span>Centro, a pasos del metro</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Por qué Galana -->
+    <section class="why-section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">¿Por qué elegir Galana?</h2>
+            <p class="section-subtitle scroll-reveal">Una clínica de barrio con estándar de especialistas</p>
+            <div class="why-grid">
+                <div class="why-card scroll-reveal">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 21C7 17 3 13.5 3 9.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 3.5c0 4-4 7.5-9 11.5z" stroke-width="2" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Trato cercano</h3>
+                    <p>Te atendemos por tu nombre, te explicamos cada tratamiento y te acompañamos durante todo el proceso.</p>
+                </div>
+                <div class="why-card scroll-reveal">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke-width="2"/><path d="M2.5 20c.8-3.2 3.4-5 6.5-5s5.7 1.8 6.5 5" stroke-width="2" stroke-linecap="round"/><path d="M16 8h6M19 5v6" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Especialistas en cada área</h3>
+                    <p>Odontología general, endodoncia y ortodoncia con profesionales dedicados a su especialidad.</p>
+                </div>
+                <div class="why-card scroll-reveal">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z" stroke-width="2"/><circle cx="12" cy="10" r="2.5" stroke-width="2"/></svg>
+                    </div>
+                    <h3>Ubicación céntrica</h3>
+                    <p>En pleno Paseo Huérfanos, a pasos del Metro Plaza de Armas. Fácil de llegar desde cualquier comuna.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Services Preview -->
     <section class="services-preview">
         <div class="container">
-            <h2 class="section-title">Nuestros Servicios</h2>
-            <p class="section-subtitle">Atención dental integral con los más altos estándares de calidad</p>
-            
+            <h2 class="section-title scroll-reveal">Nuestros Servicios</h2>
+            <p class="section-subtitle scroll-reveal">Atención dental integral con los más altos estándares de calidad</p>
+
             <div class="services-grid">
-                <a href="servicios.html#examen" class="service-card">
-                    <!--
+                <a href="servicios.html#examen" class="service-card scroll-reveal">
                     <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M12 2L12 22M2 12L22 12" stroke-width="2" stroke-linecap="round"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <circle cx="10" cy="10" r="6" stroke-width="2"/>
+                            <path d="M14.5 14.5L21 21" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M8 10l1.5 1.5L12.5 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    -->
                     <h3 class="service-title">Examen Dental General</h3>
                     <p class="service-description">Evaluación completa de tu salud bucal</p>
                     <span class="service-duration">1 hora</span>
                 </a>
 
-                <a href="servicios.html#endodoncia" class="service-card">
-                    <!--
+                <a href="servicios.html#endodoncia" class="service-card scroll-reveal">
                     <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M12 2C12 2 15 5 15 8C15 10.5 13 12 12 12C11 12 9 10.5 9 8C9 5 12 2 12 2Z" stroke-width="2"/>
-                            <path d="M12 12L12 22" stroke-width="2" stroke-linecap="round"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path d="M7 3C4.8 3 3.5 4.8 3.5 7c0 1.8.7 3 1.4 4.8.7 2 1 5 2.2 7.2.5.9 1.8.8 2.1-.2.4-1.4.4-3.2.9-4.5.4-.9 1.4-.9 1.8 0 .5 1.3.5 3.1.9 4.5.3 1 1.6 1.1 2.1.2 1.2-2.2 1.5-5.2 2.2-7.2.7-1.8 1.4-3 1.4-4.8 0-2.2-1.3-4-3.5-4-1.1 0-1.8.7-3 .7S8.1 3 7 3z" stroke-width="2" stroke-linejoin="round" transform="translate(1.5 0)"/>
+                            <path d="M12 8v6" stroke-width="2" stroke-linecap="round" transform="translate(0.5 0)"/>
                         </svg>
                     </div>
-                    -->
                     <h3 class="service-title">Endodoncia</h3>
                     <p class="service-description">Tratamiento de conductos radiculares</p>
                     <span class="service-duration">1 hora</span>
                 </a>
 
-                <a href="servicios.html#ortodoncia" class="service-card">
-                    <!--
+                <a href="servicios.html#ortodoncia" class="service-card scroll-reveal">
                     <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <rect x="4" y="8" width="16" height="8" rx="2" stroke-width="2"/>
-                            <path d="M8 12L16 12" stroke-width="2" stroke-linecap="round"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <rect x="3" y="8" width="18" height="8" rx="3" stroke-width="2"/>
+                            <path d="M7 12h10" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="9" cy="12" r="0.5" fill="currentColor"/>
+                            <circle cx="15" cy="12" r="0.5" fill="currentColor"/>
                         </svg>
                     </div>
-                    -->
                     <h3 class="service-title">Ortodoncia</h3>
                     <p class="service-description">Alineación dental y corrección de mordida</p>
                     <span class="service-duration">1 hora</span>
                 </a>
 
-                <a href="servicios.html#rehabilitacion" class="service-card">
-                    <!--
+                <a href="servicios.html#rehabilitacion" class="service-card scroll-reveal">
                     <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M7 10C7 8.34315 8.34315 7 10 7H14C15.6569 7 17 8.34315 17 10V14C17 15.6569 15.6569 17 14 17H10C8.34315 17 7 15.6569 7 14V10Z" stroke-width="2"/>
-                            <path d="M10 7V4M14 7V4M10 17V20M14 17V20" stroke-width="2" stroke-linecap="round"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path d="M8 3h8l-1 4H9L8 3z" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M10 7l1 13c0 .6.4 1 1 1s1-.4 1-1l1-13" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M10.3 11h3.4M10.6 14.5h2.8M10.8 18h2.4" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    -->
                     <h3 class="service-title">Rehabilitación e Implantes</h3>
                     <p class="service-description">Recupera tu sonrisa completa</p>
                     <span class="service-duration">1 hora</span>
                 </a>
 
-                <a href="servicios.html#cirugia" class="service-card">
-                    <!--
+                <a href="servicios.html#cirugia" class="service-card scroll-reveal">
                     <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M12 2L12 12M12 12L22 12M12 12L12 22M12 12L2 12" stroke-width="2" stroke-linecap="round"/>
-                            <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <circle cx="12" cy="12" r="9" stroke-width="2"/>
+                            <path d="M12 8v8M8 12h8" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    -->
                     <h3 class="service-title">Cirugía</h3>
                     <p class="service-description">Procedimientos quirúrgicos especializados</p>
                     <span class="service-duration">2 horas</span>
@@ -131,6 +257,68 @@
         </div>
     </section>
 
+    <!-- Equipo -->
+    <section class="team-section" id="equipo">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Nuestro Equipo</h2>
+            <p class="section-subtitle scroll-reveal">Profesionales dedicados a cuidar tu salud bucal</p>
+            <!-- Se rellena desde data/equipo.json — editar con equipo-editor.html -->
+            <div class="team-grid" id="teamGrid"></div>
+        </div>
+    </section>
+
+    <!-- Cómo agendar -->
+    <section class="steps-section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Agendar es así de simple</h2>
+            <div class="steps-grid">
+                <div class="step-card scroll-reveal">
+                    <span class="step-number">1</span>
+                    <h3>Escríbenos</h3>
+                    <p>Por WhatsApp o con nuestro asistente virtual, cuéntanos qué necesitas.</p>
+                </div>
+                <div class="step-card scroll-reveal">
+                    <span class="step-number">2</span>
+                    <h3>Confirma tu hora</h3>
+                    <p>Te proponemos día y hora con el profesional adecuado para tu caso.</p>
+                </div>
+                <div class="step-card scroll-reveal">
+                    <span class="step-number">3</span>
+                    <h3>Ven a tu cita</h3>
+                    <p>Te esperamos en Paseo Huérfanos 1117, oficina 607. ¡Sonríe tranquilo!</p>
+                </div>
+            </div>
+            <div class="cta-center">
+                <a href="https://wa.me/56956789735?text=Hola, me gustaría agendar una hora" class="btn btn-primary">Agendar por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Preguntas frecuentes</h2>
+            <div class="faq-list">
+                <details class="faq-item scroll-reveal">
+                    <summary>¿Dónde está la clínica?</summary>
+                    <p>En Paseo Huérfanos 1117, oficina 607, Santiago Centro — a pasos del Metro Plaza de Armas (Línea 3 y 5).</p>
+                </details>
+                <details class="faq-item scroll-reveal">
+                    <summary>¿Cuáles son los horarios de atención?</summary>
+                    <p>Lunes a viernes de 10:00 a 18:00 y sábados de 10:00 a 14:00. Domingos cerrado.</p>
+                </details>
+                <details class="faq-item scroll-reveal">
+                    <summary>¿Cómo agendo una hora?</summary>
+                    <p>Escríbenos por WhatsApp al <a href="https://wa.me/56956789735">+56 9 5678 9735</a> o usa el chat de la esquina inferior derecha: nuestro asistente virtual te ayuda a encontrar hora en minutos, a cualquier hora del día.</p>
+                </details>
+                <details class="faq-item scroll-reveal">
+                    <summary>¿Qué especialidades tienen?</summary>
+                    <p>Odontología general, endodoncia, ortodoncia, rehabilitación oral con implantes y cirugía dental.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
     <!-- Location Section -->
     <section class="location-section" id="contact">
         <div class="container">
@@ -139,10 +327,10 @@
                     <h2 class="section-title">¿Cómo llegar a Clínica Dental Galana?</h2>
                     <div class="location-details">
                         <p class="location-address"><strong>Estamos en Paseo Huérfanos 1117, Oficina 607, Santiago, Chile.</strong></p>
-                        
+
                         <div class="info-box">
                             <h3>Horario de atención</h3>
-                            <p class="status open">Abierto</p>
+                            <p class="status" id="openStatus" hidden></p>
                             <p>Lunes a Viernes: 10:00 - 18:00</p>
                             <p>Sábado: 10:00 - 14:00</p>
                             <p>Domingo: Cerrado</p>
@@ -154,21 +342,18 @@
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                                 </svg>
-                                <span>+56 9 5678 9735</span>
+                                <span class="contact-main">
+                                    +56 9 5678 9735
+                                    <small class="contact-sub">También +56 9 5678 9736</small>
+                                </span>
                             </a>
-                            <a href="https://wa.me/56956789736" class="contact-link whatsapp">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                                </svg>
-                                <span>+56 9 5678 9736</span>
-                            </a>
-                            <a href="https://www.instagram.com/galanaclinicadental" class="contact-link instagram" target="_blank">
+                            <a href="https://www.instagram.com/galanaclinicadental" class="contact-link instagram" target="_blank" rel="noopener noreferrer">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                                 </svg>
                                 <span>@galanaclinicadental</span>
                             </a>
-                            <a href="https://www.facebook.com/profile.php?id=61557502093014" class="contact-link facebook" target="_blank">
+                            <a href="https://www.facebook.com/profile.php?id=61557502093014" class="contact-link facebook" target="_blank" rel="noopener noreferrer">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                                 </svg>
@@ -177,28 +362,16 @@
                         </div>
                     </div>
                 </div>
-                <div style="width: 100%">
-                    <iframe 
-                        width="100%" 
-                        height="450" 
-                        frameborder="0" 
-                        scrolling="no" 
-                        marginheight="0" 
-                        marginwidth="0" 
-                        src="https://maps.google.com/maps?width=100%25&amp;height=450&amp;hl=es&amp;q=-33.439393,-70.652657+(Mi%20Ubicación)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                <div class="map-container">
+                    <iframe
+                        width="100%"
+                        height="450"
+                        loading="lazy"
+                        title="Mapa de ubicación de Clínica Dental Galana"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://maps.google.com/maps?hl=es&amp;q=-33.439393,-70.652657+(Cl%C3%ADnica%20Dental%20Galana)&amp;z=16&amp;output=embed">
                     </iframe>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Reserva por WhatsApp</h2>
-                <a href="https://wa.me/56956789735" class="btn btn-cta">+56 9 5678 9735</a>
-                <a href="https://wa.me/56956789736" class="btn btn-cta">+56 9 5678 9736</a>
             </div>
         </div>
     </section>
@@ -208,8 +381,9 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-info">
-                    <p><strong>Instagram:</strong> <a href="https://www.instagram.com/galanaclinicadental" target="_blank">@galanaclinicadental</a></p>
-                    <p><strong>WhatsApp:</strong> <a href="https://wa.me/56956789735">+56 9 5678 9735</a> <a href="https://wa.me/56956789736">+56 9 5678 9736</a></p>
+                    <p>Paseo Huérfanos 1117, Oficina 607, Santiago ·
+                       <a href="https://wa.me/56956789735">WhatsApp +56 9 5678 9735</a> ·
+                       <a href="https://www.instagram.com/galanaclinicadental" target="_blank" rel="noopener noreferrer">@galanaclinicadental</a></p>
                 </div>
                 <p class="footer-copyright">© 2022 - 2026 Clínica Dental Galana</p>
             </div>
@@ -217,5 +391,12 @@
     </footer>
 
     <script src="js/main.js"></script>
+
+    <!-- Asistente virtual molari.ai (cambiar data-origin/src a https://app.molari.ai cuando el dominio esté activo) -->
+    <script
+        src="https://molari-beta.vercel.app/widget.js"
+        data-clinic="galana"
+        data-color="#00A0C0"
+        data-origin="https://molari-beta.vercel.app"></script>
 </body>
 </html>
