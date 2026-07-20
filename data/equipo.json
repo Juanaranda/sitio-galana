@@ -2,31 +2,31 @@
   "_instrucciones": "Lista del equipo de la clínica. Para editarla sin tocar código, abre equipo-editor.html en el navegador, agrega a los profesionales y descarga el archivo actualizado. Mientras la lista esté vacía, la sección Equipo no se muestra en el sitio. Las fotos deben guardarse en images/equipo/ (descárgalas de Instagram y súbelas al repositorio; no uses links directos de Instagram porque caducan). El campo dias es opcional: si va vacío, la tarjeta no lo muestra.",
   "equipo": [
     {
-      "nombre": "Ivonne Poblete",
+      "nombre": "Dra. Ivonne Poblete",
       "especialidad": "Odontología General",
       "dias": "",
       "foto": ""
     },
     {
-      "nombre": "Juan Garcés",
+      "nombre": "Dr. Juan Garcés",
       "especialidad": "Endodoncia",
       "dias": "",
       "foto": ""
     },
     {
-      "nombre": "Javiera Palmilla",
+      "nombre": "Dra. Javiera Palmilla",
       "especialidad": "Odontología General",
       "dias": "",
       "foto": ""
     },
     {
-      "nombre": "Nicolás Rojas",
+      "nombre": "Dr. Nicolás Rojas",
       "especialidad": "Odontología General",
       "dias": "",
       "foto": ""
     },
     {
-      "nombre": "Yamileth Zerpa",
+      "nombre": "Dra. Yamileth Zerpa",
       "especialidad": "Ortodoncia",
       "dias": "",
       "foto": ""
