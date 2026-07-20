@@ -13,7 +13,7 @@
 
     var WHATSAPP = 'https://wa.me/56956789735?text=Hola, me gustaría agendar una hora';
 
-    var SALUDO = '¡Hola! 👋 Soy la asistente de Clínica Dental Galana. ' +
+    var SALUDO = '¡Hola! 👋 Soy Anita, la asistente virtual de Clínica Dental Galana. ' +
         'Puedo contarte sobre horarios, ubicación y tratamientos. ¿En qué te ayudo?';
 
     var SUGERENCIAS = [
@@ -210,7 +210,7 @@
 
         toggle = crear('button', 'ga-chat-toggle');
         toggle.type = 'button';
-        toggle.setAttribute('aria-label', 'Abrir el asistente virtual');
+        toggle.setAttribute('aria-label', 'Abrir el chat con Anita, la asistente virtual');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.innerHTML =
             '<svg class="ga-ico-abrir" viewBox="0 0 24 24" aria-hidden="true">' +
@@ -220,14 +220,14 @@
 
         panel = crear('div', 'ga-chat-panel');
         panel.setAttribute('role', 'dialog');
-        panel.setAttribute('aria-label', 'Asistente virtual de Clínica Dental Galana');
+        panel.setAttribute('aria-label', 'Anita, asistente virtual de Clínica Dental Galana');
 
         var head = crear('div', 'ga-chat-head');
         var avatar = crear('div', 'ga-chat-head-avatar', '🦷');
         avatar.setAttribute('aria-hidden', 'true');
         var titulo = crear('div');
-        titulo.appendChild(crear('strong', null, 'Asistente Galana'));
-        titulo.appendChild(crear('span', null, 'Responde al instante'));
+        titulo.appendChild(crear('strong', null, 'Anita'));
+        titulo.appendChild(crear('span', null, 'Asistente virtual · responde al instante'));
         head.appendChild(avatar);
         head.appendChild(titulo);
 
@@ -292,7 +292,7 @@
             var abierto = panel.classList.toggle('abierto');
             toggle.classList.toggle('abierto', abierto);
             toggle.setAttribute('aria-expanded', String(abierto));
-            toggle.setAttribute('aria-label', abierto ? 'Cerrar el asistente virtual' : 'Abrir el asistente virtual');
+            toggle.setAttribute('aria-label', abierto ? 'Cerrar el chat' : 'Abrir el chat con Anita, la asistente virtual');
             if (abierto) { input.focus(); irAbajo(); }
         });
 
