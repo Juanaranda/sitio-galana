@@ -1,0 +1,13 @@
+# Variables de entorno — NUNCA se suben al repositorio.
+# La API key se carga a mano en Vercel (Settings → Environment Variables).
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+node_modules/

@@ -310,11 +310,11 @@
 
     <script src="js/main.js"></script>
 
-    <!-- Asistente virtual molari.ai (cambiar data-origin/src a https://app.molari.ai cuando el dominio esté activo) -->
-    <script
-        src="https://molari-beta.vercel.app/widget.js"
-        data-clinic="galana"
-        data-color="#00A0C0"
-        data-origin="https://molari-beta.vercel.app"></script>
+    <!-- Asistente virtual (provisorio, corre en este mismo proyecto vía /api/chat).
+         Cuando el agente de molari.ai esté listo, se borra js/chat-widget.js y api/chat.mjs
+         y se vuelve a poner el snippet de molari:
+         <script src="https://molari-beta.vercel.app/widget.js" data-clinic="galana"
+                 data-color="#00A0C0" data-origin="https://molari-beta.vercel.app"></script> -->
+    <script src="js/chat-widget.js" defer></script>
 </body>
 </html>
