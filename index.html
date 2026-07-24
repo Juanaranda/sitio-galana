@@ -82,7 +82,7 @@
                     <li><a href="servicios.html" class="nav-link">Servicios</a></li>
                     <li><a href="#equipo" class="nav-link">Equipo</a></li>
                     <li><a href="#contact" class="nav-link">Contacto</a></li>
-                    <li><a href="https://wa.me/56956789735?text=Hola, me gustaría agendar una hora" class="btn btn-nav">Agendar</a></li>
+                    <li><a href="#agendar" class="btn btn-nav">Agendar</a></li>
                 </ul>
             </nav>
         </div>
@@ -102,7 +102,7 @@
                     con especialistas en cada área y horarios de lunes a sábado.
                 </p>
                 <div class="hero-actions">
-                    <a href="https://wa.me/56956789735?text=Hola, me gustaría agendar una hora" class="btn btn-hero-primary">Reservar cita</a>
+                    <a href="#agendar" class="btn btn-hero-primary">Reservar cita</a>
                     <a href="servicios.html" class="btn btn-hero-secondary">Ver servicios</a>
                 </div>
                 <ul class="hero-facts">
@@ -303,9 +303,64 @@
                     <p>Te esperamos en Paseo Huérfanos 1117, oficina 607. ¡Sonríe tranquilo!</p>
                 </div>
             </div>
-            <div class="cta-center">
-                <a href="https://wa.me/56956789735?text=Hola, me gustaría agendar una hora" class="btn btn-primary">Agendar por WhatsApp</a>
-            </div>
+        </div>
+    </section>
+
+    <!-- Solicitar hora -->
+    <section class="booking-section" id="agendar">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Solicita tu hora</h2>
+            <p class="section-subtitle scroll-reveal">Cuéntanos qué necesitas y cuándo te acomoda. Al enviar se abre WhatsApp con tu solicitud lista; el equipo te confirma la hora.</p>
+
+            <form class="booking-form scroll-reveal" id="bookingForm" novalidate>
+                <div class="booking-field">
+                    <label for="bkNombre">Tu nombre</label>
+                    <input type="text" id="bkNombre" name="nombre" autocomplete="name" required>
+                </div>
+
+                <div class="booking-field">
+                    <label for="bkServicio">¿Qué necesitas?</label>
+                    <select id="bkServicio" name="servicio" required>
+                        <option value="" selected disabled>Elige un servicio</option>
+                        <option>Examen dental general</option>
+                        <option>Limpieza dental</option>
+                        <option>Endodoncia</option>
+                        <option>Ortodoncia</option>
+                        <option>Rehabilitación e implantes</option>
+                        <option>Cirugía dental</option>
+                        <option>No estoy seguro / Primera consulta</option>
+                    </select>
+                </div>
+
+                <div class="booking-field">
+                    <label for="bkDia">Día que prefieres</label>
+                    <input type="date" id="bkDia" name="dia" required>
+                    <span class="booking-hint" id="bkDiaHint">Atendemos de lunes a sábado.</span>
+                </div>
+
+                <div class="booking-field">
+                    <label for="bkHorario">Horario que prefieres</label>
+                    <select id="bkHorario" name="horario" required>
+                        <option value="" selected disabled>Elige un horario</option>
+                        <option>En la mañana</option>
+                        <option>En la tarde</option>
+                        <option>Me acomoda cualquiera</option>
+                    </select>
+                </div>
+
+                <div class="booking-field booking-field-full">
+                    <label for="bkComentario">Algo que debamos saber <span class="booking-opt">(opcional)</span></label>
+                    <textarea id="bkComentario" name="comentario" rows="2" maxlength="300"></textarea>
+                </div>
+
+                <p class="booking-error" id="bkError" role="alert" hidden></p>
+
+                <div class="booking-actions">
+                    <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
+                    <a href="https://wa.me/56956789735?text=Hola, me gustaría agendar una hora" class="booking-alt">o escríbenos directo</a>
+                </div>
+                <p class="booking-note">No es una reserva automática: es una solicitud que el equipo confirma contigo.</p>
+            </form>
         </div>
     </section>
 

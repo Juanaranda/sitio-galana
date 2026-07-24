@@ -415,6 +415,99 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
+// FORMULARIO "SOLICITAR HORA"
+// ============================================
+// No reserva de verdad: arma un mensaje ordenado y abre WhatsApp, que es donde
+// la clínica confirma. Por eso toda la validación es en el cliente y no hay que
+// mandar nada a un servidor.
+(function () {
+    var form = document.getElementById('bookingForm');
+    if (!form) return;
+
+    var WHATSAPP = '56956789735';
+    var diaInput = document.getElementById('bkDia');
+    var errorBox = document.getElementById('bkError');
+
+    // La agenda vive en Chile; el mínimo del calendario es "hoy" en esa zona,
+    // para que alguien en otro huso no pueda elegir un día que allá ya pasó.
+    function hoyEnChile() {
+        var partes = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'America/Santiago', year: 'numeric', month: '2-digit', day: '2-digit'
+        }).format(new Date());
+        return partes; // yyyy-mm-dd
+    }
+    diaInput.min = hoyEnChile();
+
+    function mostrarError(msg) {
+        errorBox.textContent = msg;
+        errorBox.hidden = false;
+    }
+
+    // Marca en rojo un campo puntual. El .has-error se limpia solo cuando el
+    // usuario lo corrige, para que el rojo no se quede pegado.
+    function marcar(input) {
+        var campo = input.closest('.booking-field');
+        if (!campo) return;
+        campo.classList.add('has-error');
+        input.addEventListener('input', function quitar() {
+            campo.classList.remove('has-error');
+            input.removeEventListener('input', quitar);
+        });
+    }
+
+    // yyyy-mm-dd -> "martes 29 de julio" (se construye local para no correr un día
+    // por el desfase de zona horaria que trae el parseo ISO).
+    function formatearDia(valor) {
+        var p = valor.split('-');
+        var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+        var texto = d.toLocaleDateString('es-CL', {
+            weekday: 'long', day: 'numeric', month: 'long'
+        });
+        return { texto: texto, esDomingo: d.getDay() === 0 };
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errorBox.hidden = true;
+
+        var nombre = form.nombre.value.trim();
+        var servicio = form.servicio.value;
+        var dia = form.dia.value;
+        var horario = form.horario.value;
+        var comentario = form.comentario.value.trim();
+
+        if (!nombre || !servicio || !dia || !horario) {
+            if (!nombre) marcar(form.nombre);
+            if (!servicio) marcar(form.servicio);
+            if (!dia) marcar(form.dia);
+            if (!horario) marcar(form.horario);
+            mostrarError('Completa tu nombre, el servicio, el día y el horario para enviar la solicitud.');
+            return;
+        }
+
+        var fecha = formatearDia(dia);
+        if (fecha.esDomingo) {
+            marcar(form.dia);
+            mostrarError('Los domingos no atendemos. Elige un día de lunes a sábado.');
+            return;
+        }
+
+        var lineas = [
+            'Hola, quiero solicitar una hora 🦷',
+            '',
+            '• Nombre: ' + nombre,
+            '• Servicio: ' + servicio,
+            '• Día preferido: ' + fecha.texto,
+            '• Horario: ' + horario
+        ];
+        if (comentario) lineas.push('• Comentario: ' + comentario);
+
+        var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(lineas.join('\n'));
+        window.open(url, '_blank', 'noopener');
+    });
+})();
+
+// ============================================
 // DETECTAR DISPOSITIVO TÁCTIL
 // ============================================
 function isTouchDevice() {
